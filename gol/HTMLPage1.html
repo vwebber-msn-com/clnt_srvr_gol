@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+
+</body>
+</html>
+
+
+Skip to content
+Why GitHub?
+Enterprise
+Explore
+Marketplace
+Pricing
+Search
+
+Sign in
+Sign up
+400zspace/system.software.interview.gol.public
+ Code Issues 0 Pull requests 0 Projects 0 Wiki Security Insights
+Join GitHub today
+GitHub is home to over 40 million developers working together to host and review code, manage projects, and build software together.
+
+system.software.interview.gol.public/GOL-client-server.md
+ Robert Kalnins some sundry cleanup
+4fc43a9 23 days ago
+80 lines (40 sloc)  4.78 KB
+
+zSpace Coding Exercise #2:
+Conway's Game of Life (GoL)
+(Client/Server C Implementation)
+
+Prerequisite: Complete Exercise #1 - Trivial GoL, which you will build upon for this exercise.
+
+Implement: A client/server version of the Game of Life (GoL) via TCP/IP stream sockets.
+
+The particular port number and protocol are up to you.
+
+We provide a Windows sample implementation of gol-client.exe and gol-server.exe that demonstrate the desired functionality, and which is described below. Your implementation should strive to follow this behavior.
+
+You should produce a single application binary that can be hard-/sym-linked to two names, gol-server and gol-client on 'nix or gol-server.exe and gol-client.exe on Windows.
+
+Upon startup, the application should introspect its filename and behave accordingly as client or server, e.g. like busybox or toybox.
+
+Starting the server should look like this:
+
+start server
+
+The server should listen on some port, and accept client connection to it. You only need to support the case of a single concurrent server.
+
+On startup, the client should print out a summary of its commands, and then attempt to connect to the server. You only need to support the case of a single concurrent client.
+
+start client
+
+The client should be capable of sending all the commands summarized above to the server, most of which should be self-evident from the above screenshot.
+
+The server should be capable of handling all these commands, and then replying back to the client with the resulting state of the board.
+
+When the client receives such board state updates, it should display the board configuration and generation number as shown in the examples below.
+
+Example of "." command (current state):
+
+current state "."
+
+Example of "R" command (random init):
+random init "R"
+
+Example of "S" command (single step):
+single step "S"
+
+Example of "3C" command (flip cell '3C'):
+flip cell 3C
+
+Example of "3D" and "3E" commands (flip cell '3D' and '3E'):
+flip cells 3D and 3E
+
+The "G" (go) command should cause the server begin computing successive generations automatically until explicitly stopped.
+
+The "S" (stop) command should cause the server to halt the periodic computation state engaged via "G". This is the default state at server startup.
+
+While the server is in the "G" state, it should periodically (every 3 seconds in our implementation) send the board state to the client.
+
+While the server is in the "G" state, the client should display any incoming board state updates. (Note the gap between generation '>2' and '>2146' in the example below.)
+
+While the server is in the "G" state, client and server should still be capable of accepting and dispatching all valid user commands.
+
+Example of "G" command (go):
+
+go "G"
+
+The "Q" command (quit) should disconnect and terminate the client, but leave the server running.
+
+The "K" command (kill) should terminate the server, and then terminate the client.
+
+You can use this template for Exercise #2 (or roll your own from scratch):
+
+gol-cs code structure server gol-cs code structure client
+
+Once you are proud of your results, please send all your source files, make/project/solution files necessary to build it, and resulting binaries to system.software.jobs@zspace.com. We prefer a GitHub repo link, but a zip archive is also acceptable.
+© 2019 GitHub, Inc.
+Terms
+Privacy
+Security
+Status
+Help
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
